@@ -7,8 +7,8 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 import Header from './components/Header/Header';
 import Home from './containers/Home/Home';
-import Login from './containers/Login/Login';
-import Register from './containers/Register/Register';
+import Login from './containers/User/Login/Login';
+import Register from './containers/User/Register/Register';
 
 function App() {
   return (

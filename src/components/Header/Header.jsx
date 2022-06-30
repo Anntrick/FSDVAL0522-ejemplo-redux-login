@@ -1,17 +1,16 @@
-
-
-import React from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
+import jwt from 'jwt-decode'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout, userSelector, login } from '../../containers/User/userSlice'
 import './Header.css';
-
-import {useNavigate} from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 
 const Header = () => {
-
-    //Esto no es un hook, es simplemente una variable "normal"
-
-    let navegador = useNavigate();
-
+    const dispatch = useDispatch()
+    const user = useSelector(userSelector)
+    let navegador = useNavigate()
 
     const viajar = (destino) => {
         navegador(destino)
@@ -19,8 +18,21 @@ const Header = () => {
 
     return (
         <div className='headerDesign'>
-            <div className='textLink' onClick={()=>viajar("/login")}>Login</div>
-            <div className='textLink' onClick={()=>viajar("/register")}>Register</div>
+            {!user.isLogged &&
+                <div>
+                    <div className='textLink' onClick={()=>viajar("/login")}>Login</div>
+                    <div className='textLink' onClick={()=>viajar("/register")}>Register</div>
+                </div>
+            }
+
+            {user.isLogged &&
+                <div>
+                    <Button onClick={()=>{
+                        localStorage.clear()
+                        dispatch(logout())
+                    }}>Logout</Button>
+                </div>
+            }
         </div>
     )
 
